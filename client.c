@@ -7,6 +7,10 @@
 #include <inttypes.h>
 #include <string.h>
 
+#define LENGTH_OF_MESSAGE 100
+#define LENGTH_OF_LOOP 5
+#define SEND_FREQUENCY 10
+
 int serial_init(char *port_name)
 {
 	//open the port
@@ -57,20 +61,19 @@ int main(void)
 		return 0;
 	}
 
-	//send something
-	char *s = "hello\n";
-	serial_puts(serial_fd, s, strlen(s));
-	serial_puts(serial_fd, s, strlen(s));
-	serial_puts(serial_fd, s, strlen(s));
-
-	printf("sent \"hello\" 3 times.\n\n"
-	       "received:\n");
-
-	//test the program by shorting tx and rx
-	while(1) {
-		//receive the test message
-		printf("%c", serial_getc(serial_fd));
+	// produce messages
+	char msg[LENGTH_OF_MESSAGE];
+	for (int i = 0; i < LENGTH_OF_MESSAGE; i++) {
+		msg[i] = '1';
 	}
+	msg[LENGTH_OF_MESSAGE-1] = '\n';
+
+	int delay_time_us = 1000000/SEND_FREQUENCY;
+	for (int i = 0; i < LENGTH_OF_LOOP; i++) {
+		usleep(delay_time_us);
+		serial_puts(serial_fd, msg, strlen(msg));
+	}
+	printf("I sent %d bytes of messages.\n", LENGTH_OF_MESSAGE*LENGTH_OF_LOOP);
 
 	close(serial_fd);
 

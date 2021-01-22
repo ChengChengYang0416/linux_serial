@@ -57,19 +57,15 @@ int main(void)
 		return 0;
 	}
 
-	//send something
-	char *s = "hello\n";
-	serial_puts(serial_fd, s, strlen(s));
-	serial_puts(serial_fd, s, strlen(s));
-	serial_puts(serial_fd, s, strlen(s));
-
-	printf("sent \"hello\" 3 times.\n\n"
-	       "received:\n");
-
-	//test the program by shorting tx and rx
+	int counter = 0;
 	while(1) {
 		//receive the test message
-		printf("%c", serial_getc(serial_fd));
+		char ch = serial_getc(serial_fd);
+		counter++;
+		printf("%c", ch);
+		if (ch == '\n') {
+			printf("I got %d bytes of messages.\n", counter);
+		}
 	}
 
 	close(serial_fd);
