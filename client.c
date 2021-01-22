@@ -21,7 +21,7 @@ int serial_init(char *port_name)
 
 	tcgetattr(serial_fd, &options);
 
-	options.c_cflag = B9600 | CS8 | CLOCAL | CREAD;
+	options.c_cflag = B115200 | CS8 | CLOCAL | CREAD;
 	options.c_iflag = IGNPAR;
 	options.c_oflag = 0;
 	options.c_lflag = 0;
@@ -51,7 +51,7 @@ char serial_getc(int serial_fd)
 
 int main(void)
 {
-	int serial_fd = serial_init("/dev/ttyUSB0");
+	int serial_fd = serial_init("/dev/ttyUSB1");
 	if(serial_fd == -1) {
 		printf("failed to open the serial port.\n");
 		return 0;
