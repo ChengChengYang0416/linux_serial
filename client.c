@@ -7,9 +7,9 @@
 #include <inttypes.h>
 #include <string.h>
 
-#define LENGTH_OF_MESSAGE 100
-#define LENGTH_OF_LOOP 5
-#define SEND_FREQUENCY 10
+#define LENGTH_OF_MESSAGE 19
+#define LENGTH_OF_LOOP 1000
+#define SEND_FREQUENCY 30
 
 int serial_init(char *port_name)
 {
@@ -62,7 +62,7 @@ int main(void)
 	}
 
 	// produce messages
-	char msg[LENGTH_OF_MESSAGE];
+	char msg[LENGTH_OF_MESSAGE+1]={'\0'};
 	for (int i = 0; i < LENGTH_OF_MESSAGE; i++) {
 		msg[i] = '1';
 	}
