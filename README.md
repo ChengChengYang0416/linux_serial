@@ -4,5 +4,10 @@
 
 ```
 make
-./serial
+./server
+```
+
+In another
+```
+./client
 ```
